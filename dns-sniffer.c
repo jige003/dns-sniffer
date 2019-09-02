@@ -96,7 +96,7 @@ static const char *dns_types[] = {
     "AAAA"   /* IPv6 Host Address (RFC 1886) */
 };
 
-void Usage();
+void Usage(char* prog_name);
 
 void px (char *tag, struct query_zone* qz);
 
@@ -125,10 +125,10 @@ int isstr(char *str, int len);
 
 void xfree(void *ptr);
 
-void Usage(){
+void Usage(char* prog_name){
     fprintf(stderr, "Copyright by jige003\n\n");
     fprintf(stderr, "Usage:\n");
-    fprintf(stderr, "\tdns-sniffer [-h] -i interface -p port\n\n");
+    fprintf(stderr, "\t%s [-h] -i interface -p port\n\n", prog_name);
 }
 
 char* getTimeNow(){
@@ -403,15 +403,17 @@ int main(int argc, char **argv){
     
     int i;
     
+    char *prog_name = argv[0];
+
     if (argc < 2 ){
-        Usage();
+        Usage(prog_name);
         return -1;
     }
 
     while ((i = getopt(argc, argv, "hi:p:")) != -1) {
         switch(i){
             case 'h':
-                Usage();
+                Usage(prog_name);
                 return -1;
                 break;
             case 'i':
